@@ -14,9 +14,8 @@ import java.util.LinkedList;
 
 public class program implements NativeKeyListener {
 
-    private boolean iscPressed;
-    private boolean isControlPressed;
-    private LinkedList<String> clipList = new LinkedList<String>();
+    private LinkedList<String> keypressList = new LinkedList<String>();
+    private String keyPresses;
 
     public static void main(String[]args) {
         //new BackGroundFrame();
@@ -46,31 +45,16 @@ public class program implements NativeKeyListener {
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-        System.out.println("SOMETHING PRESSED");
 
-        if (e.getKeyCode() == e.VC_CONTROL) {
-            isControlPressed = true;
-        } else if (e.getKeyCode() == e.VC_C) {
-            iscPressed = true;
-        }
-
-        if (iscPressed & isControlPressed) {
-            System.out.println("COMBINATION PRESSED");
-            clipList.addFirst(getClip());
-        }
     }
 
     @Override
-    public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
+    public void nativeKeyTyped(NativeKeyEvent e) {
 
     }
 
     @Override
     public void nativeKeyReleased(NativeKeyEvent e) {
-        if (e.getKeyCode() == e.VC_CONTROL) {
-            isControlPressed = false;
-        } else if (e.getKeyCode() == e.VC_C) {
-            iscPressed = false;
-        }
+
     }
 }
