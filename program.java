@@ -1,25 +1,17 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedList;
+
+import javax.swing.Timer;
+
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.lang.annotation.Native;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TimerTask;
+public class program implements NativeKeyListener {
 
-public class program implements NativeKeyListener, ActionListener {
-
-    private static LinkedList<String> keypressList = new LinkedList<String>();
+    private static LinkedList<Character> keypressList = new LinkedList<Character>();
 
     public static void main(String[]args) {
 
@@ -32,19 +24,21 @@ public class program implements NativeKeyListener, ActionListener {
         }
         GlobalScreen.addNativeKeyListener(new program());
 
-        //Initiate t
-        timerInitiation();
 
-
-    }
-
-    public static void timerInitiation() {
-        t = new Timer();
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                for (char c : keypressList) {
+                    System.out.println(c);
+                }
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+        
     }
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-        keypressList.addLast(e.getKeyText(e.getKeyCode()));
+        keypressList.addLast(e.getKeyChar());
     }
 
     @Override
@@ -54,13 +48,10 @@ public class program implements NativeKeyListener, ActionListener {
 
     @Override
     public void nativeKeyReleased(NativeKeyEvent e) {
-        if (e.isActionKey()) {
-            keypressList.addLast(e.getKeyText(e.getKeyCode()) + " released");
-        }
+        /*if (e.isActionKey()) {
+            keypressList.addLast(NativeKeyEvent.getKeyText(e.getKeyCode()) + " released");
+        }*/
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
-    }
+    
 }
