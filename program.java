@@ -15,7 +15,7 @@ public class program implements NativeKeyListener {
 
     public static void main(String[]args) {
 
-        //Initiate Native Keylistener
+        //Initiate Native Keylistener here
 
         try {
             GlobalScreen.registerNativeHook();
